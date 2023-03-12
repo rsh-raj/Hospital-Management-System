@@ -19,6 +19,16 @@ const columns = [
     minWidth: 150
   },
   {
+    id : 'patient_id',
+    label : 'Pat. Id',
+    minWidth : 150
+  },
+  {
+    id : 'start_time',
+    label : 'Date',
+    minWidth: 150
+  },
+  {
     id: 'age',
     label: 'Age',
     format: (value) => value.toFixed(0),
@@ -29,13 +39,14 @@ const columns = [
     minWidth: 150
   },
   {
-    id: 'adddrugs',
-    label: '',
+    id : 'gender',
+    label: 'Gender',
     minWidth: 150
   },
+  
   {
     id: 'treatment',
-    label: 'Treatments',
+    label: 'Treatment Prescribed',
     minWidth: 150
   },
   {
@@ -68,7 +79,8 @@ export default function StickyHeadTable(props) {
   };
 
   const history = useHistory();
-  const handlePatientDetails = () => {
+  const handlePatientDetails = (patient_id) => {
+    localStorage.setItem("patient_id", patient_id)
     history.push('/patient_details');
   }
 
@@ -96,14 +108,14 @@ export default function StickyHeadTable(props) {
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                     {columns.map((column) => {
                       const value = row[column.id];
+                      const treat_id = row['doc_appointment_id']
 
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {
                             value === '' ? <p>{"—"}</p> :
-                            column.id === 'patient_name' ? <Button onClick={handlePatientDetails}>{value}</Button> :
-                            column.id === 'adddrugs' ? <FormDialogDrug /> :
-                            column.id === 'addtreatments' ? <FormDialogTreatment /> :
+                            column.id === 'patient_name' ? <Button onClick={ () => handlePatientDetails(row.patient_id)}>{value}</Button> :
+                            column.id === 'addtreatments' ? <FormDialogTreatment id={treat_id}/> :
                             column.format && typeof value === 'number' ? column.format(value) : value
                           }
                         </TableCell>

@@ -10,29 +10,31 @@ const AddTreatment = () => {
     const [input, setInput] = useState('');
     const [tags, setTags] = useState([]);
     const [isKeyReleased, setIsKeyReleased] = useState(false);
-    const [isPending, setIsPending] = useState(false);
+
+    const [isPending, setIsPending] = useState(false);  // for useEffect render 
+    const [isUser, setIsuser] = useState(false);
 
     const handleAddTreatmentSubmit = (e) => {
         e.preventDefault();
-        const treatment = {  docAppointmentID, tags };
-        console.log(treatment);
+        // const treatment = {  docAppointmentID, tags };
+        // console.log(treatment);
 
-        axios.post('https://dbms-backend-api.azurewebsites.net/add_treatment', { doc_appointment_id: docAppointmentID, treatment: tags, access_token: "" })
+        axios.post('https://dbms-backend-api.azurewebsites.net/add_treatment', { doc_appointment_id: docAppointmentID, treatment: tags.join(', '), access_token: localStorage.getItem('access_token') })
             .then((response) => {
-                // console.log(response.data['access_token']);
                 console.log(response.data);
                 alert("Treatment Added Successfully");
-                // history.push("/frontdesk");
+                setIsPending(true);
+                window.location.reload();
+                
             }, (error) => {
                 console.log(error);
-                alert("Treatment Addition Failed");
+                alert(error.response.data.message);
             }
-            )
-
-        console.log("Added Treatment");
-        setIsPending(true);
+            )    
     };
     useEffect(() => {
+        let token_type = localStorage.getItem('access_token').slice(0, 3);
+        if (token_type === "deo") { setIsuser(true); }
         // console.log("useEffect");
         // setpatientID('');
         setdocAppointmentID('');
@@ -77,6 +79,8 @@ const AddTreatment = () => {
 
 
     return (
+        <div>
+            {isUser &&
         <div className="vikasAddTreatmentContainer">
             <div className="vikasRegHead">Add Treatment</div>
             <form className='vikasRegForm'>
@@ -149,6 +153,16 @@ const AddTreatment = () => {
                 </div>
             </form>
 
+        </div>}
+            {
+                !isUser && <div className='notAuthorized'> <div class="w3-display-middle">
+                    <h1 class="w3-jumbo w3-animate-top w3-center"><code>Access Denied</code></h1>
+                    {/* <h class="w3-border-white w3-animate-left" style="margin:auto;width:50%"> */}
+                    <h3 class="w3-center w3-animate-right">You dont have permission to view this page.</h3>
+                    <h3 class="w3-center w3-animate-zoom">🚫🚫🚫🚫</h3>
+                    <h6 class="w3-center w3-animate-zoom">error code:403 forbidden</h6>
+                </div></div>
+            }
         </div>
     );
 }
