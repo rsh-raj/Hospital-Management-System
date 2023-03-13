@@ -164,6 +164,9 @@ const ScheduleAppointment = () => {
 
         var slotSelect2 = slotSelect.split("-");
         var temp = slotSelect2[0];
+        if (temp.length === 3){
+            temp = "0"+temp;
+        }
         var start_time = temp.slice(0, temp.length - 2) + ":" + temp.slice(temp.length - 2, temp.length) + ":00";
 
         start_time = appFinal + " " + start_time;
@@ -190,7 +193,7 @@ const ScheduleAppointment = () => {
             .then(
                 (response) => {
                     console.log(response.data);
-                    alert("Appointment confirmed !");
+                    alert(`Appointment confirmed ! and appointment id is ${response.data.doc_appointment_id}`);
                     window.location.reload();
                 },
                 (error) => {

@@ -21,7 +21,7 @@ const Doctor = () => {
   };
 
   const [isTodayapmts, setIsTodayapmts] = useState(false);
-  const [todaydata, setTodaydata] = React.useState(null);
+  const [todaydata, setTodaydata] = React.useState([]);
   const [isUser, setIsuser] = useState(false);
 
 
@@ -227,6 +227,9 @@ const handleSetSlot = (e) => {
                 </FormControl>
               </Box>
             </div>
+
+            <br></br>
+              {/* <h1>Appointment History</h1> */}
             <div className="admind_table">
               <StickyHeadTable patients={post} />
             </div>
@@ -238,7 +241,7 @@ const handleSetSlot = (e) => {
           <button className="backButton" onClick={handleBack}>
             <b>Back</b>
           </button>
-          <DoctorTodayApmts appointments={appointments} />
+          <DoctorTodayApmts appointments={todaydata} />
         </div>
       )}
       {

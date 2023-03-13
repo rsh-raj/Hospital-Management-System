@@ -143,6 +143,9 @@ const ScheduleTest = () => {
         console.log('Appointment Confirmed');
         var slotSelect2 = slotSelect.split("-");
         var temp = slotSelect2[0];
+        if (temp.length === 3){
+            temp = "0"+temp;
+        }
         var start_time = temp.slice(0, temp.length - 2) + ":" + temp.slice(temp.length-2, temp.length) + ":00";
         
         start_time = finalAppDate + " "+ start_time;
@@ -160,7 +163,7 @@ const ScheduleTest = () => {
         .then(
           (response) => {
             console.log(response.data);
-            alert("Test Appointment confirmed !");
+            alert(`Test Appointment confirmed ! and appointment_id is ${response.data.test_appointment_result_id}`);
             window.location.reload();
         },
         (error) => {
