@@ -23,6 +23,7 @@ import NotFound from './components/NotFound';
 import Navbar3 from './components/Navbar3';
 import Navbar4 from './components/Navbar4';
 import Home from './components/Home';
+import DocSlots from './components/docSlots';
 
 function App() {
   return (
@@ -106,10 +107,17 @@ function App() {
             <Route exact path='/scheduleappointment'>
               <Navbar2 />
               <ScheduleAppointment />
+              <Footer />
             </Route>
             <Route exact path='/scheduletest'>
               <Navbar2 /> 
               <ScheduleTest />
+              <Footer />
+            </Route>
+            <Route exact path='/addslot'>
+              <Navbar2 /> 
+              <DocSlots />
+              <Footer />
             </Route>
             <Route exact path='*'>
               <NotFound />

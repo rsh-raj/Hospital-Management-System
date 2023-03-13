@@ -39,7 +39,7 @@ const AdminAddUser = () => {
                 )
         }
         else {
-            axios.post('https://dbms-backend-api.azurewebsites.net/users/add', { name: firstName, type: Type, ph_number: phoneNumber.slice(1, 13), address: address1, password: password, access_token: localStorage.getItem('access_token') })
+            axios.post('https://dbms-backend-api.azurewebsites.net/users/add', { name: firstName, type: Type, email: email, ph_number: phoneNumber.slice(1, 13), address: address1, password: password, access_token: localStorage.getItem('access_token') })
                 .then((response) => {
 
                     console.log(response.data);
@@ -75,7 +75,7 @@ const AdminAddUser = () => {
     const [isDoctor, setIsDoctor] = useState(false);
     const emailandtype = (e, value) => {
         console.log(value);
-        if (value === "Doctor") setIsDoctor(true);
+        if (value === "doc") setIsDoctor(true);
         else setIsDoctor(false);
     };
     const [showPassword, setShowPassword] = React.useState(false);
@@ -138,8 +138,7 @@ const AdminAddUser = () => {
                                 </div>
                             </div>
                         </div>
-                        {isDoctor && <div>
-                            <div className="vikasRegRow">
+                        <div className="vikasRegRow">
                                 <label className='vikasRegCol1'>
                                     E-mail:
                                 </label>
@@ -151,6 +150,8 @@ const AdminAddUser = () => {
                                         onChange={(e) => setEmail(e.target.value)} />
                                 </div>
                             </div>
+                        {isDoctor && <div>
+                            
                             <div className="vikasRegRow">
                                 <label className='vikasRegCol1'>
                                     Type of Doctor:
